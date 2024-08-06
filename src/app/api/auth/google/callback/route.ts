@@ -2,6 +2,7 @@ import { HttpClient } from "@/packages/api/httpClient";
 import { NextResponse } from "next/server";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { JwtCookieToken } from "@/packages/constants/auth";
 
 export async function POST(request: Request) {
   try {
@@ -26,8 +27,8 @@ export async function POST(request: Request) {
     }
 
     cookies().set({
-      name: "access_token",
-      value: "mmutoken",
+      name: JwtCookieToken,
+      value: token,
       httpOnly: true,
       sameSite: "lax",
       maxAge: ((decodedToken.exp ?? 0) - (decodedToken.iat ?? 0)) * 1000,
