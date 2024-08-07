@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Provider } from "@/Providers";
 import Script from "next/script";
+import { AuthProvider } from "@/providers/AuthProvider";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { WithAuth } from "@/hocs/WithAuth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main>
-          <Provider>{children}</Provider>
+          <ReactQueryProvider>
+            <WithAuth>
+              <AuthProvider>{children}</AuthProvider>
+            </WithAuth>
+          </ReactQueryProvider>
         </main>
         <Script
           src="https://accounts.google.com/gsi/client?hl=ja"
