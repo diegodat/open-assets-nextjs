@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Provider } from "@/Providers";
 import Script from "next/script";
+import { ReactQueryProvider } from "./providers/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,16 +17,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <Script
+        src="https://accounts.google.com/gsi/client?hl=ja"
+        strategy="lazyOnload"
+        async
+        defer
+      />
       <body className={inter.className}>
         <main>
-          <Provider>{children}</Provider>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
         </main>
-        <Script
-          src="https://accounts.google.com/gsi/client?hl=ja"
-          async
-          defer
-        ></Script>
       </body>
     </html>
   );

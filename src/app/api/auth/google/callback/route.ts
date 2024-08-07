@@ -6,33 +6,33 @@ import { JwtCookieToken } from "@/packages/constants/auth";
 
 export async function POST(request: Request) {
   try {
-    const text = await request.text();
-    const params = new URLSearchParams(text);
-    const credential = params.get("credential");
-    if (!credential) {
-      return NextResponse.json({
-        message: "Invalid credential",
-      });
-    }
+    // const text = await request.text();
+    // const params = new URLSearchParams(text);
+    // const credential = params.get("credential");
+    // if (!credential) {
+    //   return NextResponse.json({
+    //     message: "Invalid credential",
+    //   });
+    // }
 
-    const response = await HttpClient.post<any>("api/google/login", {
-      credential,
-    });
-    const token = response.data.data.token;
-    const decodedToken = jwt.decode(token);
-    if (!decodedToken || typeof decodedToken === "string") {
-      return NextResponse.json({
-        message: "Invalid token",
-      });
-    }
+    // const response = await HttpClient.post<any>("api/google/login", {
+    //   credential,
+    // });
+    // const token = response.data.data.token;
+    // const decodedToken = jwt.decode(token);
+    // if (!decodedToken || typeof decodedToken === "string") {
+    //   return NextResponse.json({
+    //     message: "Invalid token",
+    //   });
+    // }
 
     cookies().set({
       name: JwtCookieToken,
-      value: token,
+      value: "token",
       httpOnly: true,
       sameSite: "lax",
-      maxAge: ((decodedToken.exp ?? 0) - (decodedToken.iat ?? 0)) * 1000,
-      domain: process.env.COOKIE_DOMAIN || undefined,
+      // maxAge: ((decodedToken.exp ?? 0) - (decodedToken.iat ?? 0)) * 1000,
+      // domain: process.env.COOKIE_DOMAIN || undefined,
     });
 
     return NextResponse.redirect(new URL("/", request.url));
