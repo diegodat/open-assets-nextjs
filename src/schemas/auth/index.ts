@@ -2,17 +2,17 @@ import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/packages/constants/file";
 import { z } from "zod";
 
 export const LoginSchema = z.object({
-  userId: z.string().trim().min(3).max(8),
+  identity: z.string().trim().min(3).max(8),
   password: z.string().min(8),
 });
 
 export const GoogleUserSignUpSchema = z.object({
-  birthday: z.object({
+  dateOfBirth: z.object({
     year: z.number().min(1900).max(new Date().getFullYear()),
     month: z.number().min(1).max(12),
     day: z.number().min(1).max(31),
   }),
-  userId: z.string().min(3).max(20),
+  accountId: z.string().min(3).max(20),
 });
 
 const emailSchema = z.string().email("Invalid email address");

@@ -7,7 +7,8 @@ export interface Response<T = any> {
 }
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "https://jsonplaceholder.typicode.com",
+  // baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
 });
 

@@ -9,7 +9,7 @@ export const useRenderGoogleButton = (
       window.google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         login_uri: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
-        callback: handleCredentialResponse,
+        // callback: handleCredentialResponse,
       });
       window.google.accounts.id.prompt();
       const googleLoginDiv: HTMLElement | null =
@@ -19,8 +19,8 @@ export const useRenderGoogleButton = (
         width: "320",
         locale: "ja",
         logo_alignment: "left",
-        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        login_uri: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
+        // client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+        // login_uri: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
         text: "signup_with",
       });
     }

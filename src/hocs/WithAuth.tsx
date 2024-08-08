@@ -1,23 +1,13 @@
-import { HttpClient } from "@/packages/api/httpClient";
+import { HttpClient } from "@/packages/axios/httpClient";
 import { JwtCookieToken } from "@/packages/constants/auth";
-import { QueryKeys } from "@/packages/constants/queryKeys";
+import { QueryKeys } from "@/packages/constants/query/queryKeys";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { FC, PropsWithChildren } from "react";
-
-type AccountResponse = {
-  id: number;
-  email: string;
-  userId: string;
-  dateOfBirth: string;
-  profileImage: string;
-  nickname: string;
-};
 
 export const WithAuth: FC<PropsWithChildren> = async (props) => {
   const queryClient = new QueryClient();

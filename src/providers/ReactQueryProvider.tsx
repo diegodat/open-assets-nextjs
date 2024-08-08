@@ -1,8 +1,8 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { FC, PropsWithChildren, useState } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const ReactQueryProvider: FC<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(
@@ -11,15 +11,16 @@ export const ReactQueryProvider: FC<PropsWithChildren> = ({ children }) => {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
-            staleTime: 60 * 1000,
+            retry: false,
+            staleTime: 1000 * 60 * 5,
           },
         },
-      })
+      }),
   );
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
       {children}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

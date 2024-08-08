@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import { AuthProvider } from "@/providers/AuthProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { WithAuth } from "@/hocs/WithAuth";
+import { AuthProvider } from "@/providers/AuthProvider";
+import { Toaster } from "@/packages/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <Script
+        src="https://accounts.google.com/gsi/client?hl=ja"
+        strategy="lazyOnload"
+        async
+        defer
+      />
       <body className={inter.className}>
         <main>
           <ReactQueryProvider>
@@ -28,11 +35,8 @@ export default function RootLayout({
             </WithAuth>
           </ReactQueryProvider>
         </main>
-        <Script
-          src="https://accounts.google.com/gsi/client?hl=ja"
-          async
-          defer
-        ></Script>
+
+        <Toaster />
       </body>
     </html>
   );

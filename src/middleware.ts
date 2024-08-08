@@ -4,6 +4,8 @@ import { JwtCookieToken } from "@/packages/constants/auth";
 import { authRoutes, privateRoutes } from "@/packages/constants/routes";
 
 export function middleware(req: NextRequest) {
+  return NextResponse.next();
+
   const { nextUrl } = req;
   if (nextUrl.pathname === "/") {
     return NextResponse.redirect(new URL("/timeline", req.url));
