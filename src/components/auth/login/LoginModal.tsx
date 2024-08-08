@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Credenza } from "@/components/auth/Credenza";
 import { LoginOptions } from "./LoginOptions";
+import { LoginSchema } from "@/schemas/auth";
 
 type Props = {
   open: boolean;
@@ -15,7 +16,7 @@ export const LoginModal: FC<Props> = (props) => {
   const { open, onOpenChange } = props;
   const [step, setStep] = useState(1);
   const method = useForm<any>({
-    // resolver: zodResolver(CredentialUserSignUpSchema),
+    resolver: zodResolver(LoginSchema),
     mode: "onBlur",
     reValidateMode: "onChange",
   });
@@ -43,7 +44,7 @@ export const LoginModal: FC<Props> = (props) => {
         content: <></>,
       },
     ],
-    []
+    [],
   );
 
   function handleNext() {
@@ -56,7 +57,7 @@ export const LoginModal: FC<Props> = (props) => {
   // console.log({ errors: method.formState.errors });
   return (
     <Credenza open={open} onOpenChange={handleOpenChange}>
-      {steps[step - 1].content}
+      <Form {...method}>{steps[step - 1].content}</Form>
     </Credenza>
   );
 };

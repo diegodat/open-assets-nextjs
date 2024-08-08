@@ -1,9 +1,11 @@
 "use client";
 
-import { useCheckScriptLoad } from "@/hooks/auth/google/useCheckScriptLoad";
+import { useCheckScriptLoad } from "@/hooks/useCheckScriptLoad";
 import { FC, useEffect, useRef } from "react";
 
-type Props = {};
+type Props = {
+  onCredentialResponse: (response: { credential: string }) => void;
+};
 
 export const GoogleSignInButton: FC<Props> = (props) => {
   const isGoogleScriptLoaded = useCheckScriptLoad();
@@ -11,9 +13,10 @@ export const GoogleSignInButton: FC<Props> = (props) => {
 
   useEffect(() => {
     if (isGoogleScriptLoaded && window.google) {
-      console.log("render google signin button");
       window.google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+        login_uri: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
+        callback: props.onCredentialResponse,
       });
       window.google.accounts.id.renderButton(buttonRef.current, {
         size: "large",

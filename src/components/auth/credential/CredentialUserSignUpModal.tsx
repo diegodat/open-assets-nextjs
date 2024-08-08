@@ -53,31 +53,31 @@ const CredentialUserSignUpModal: FC<Props> = (props) => {
   const steps = useMemo(
     () => [
       {
-        title: "email",
+        title: 1,
         content: <EmailConfirm onNext={handleNext} />,
       },
       {
-        title: "verify",
+        title: 2,
         content: <EmailVerify onNext={handleNext} />,
       },
       {
-        title: "password",
+        title: 3,
         content: <PasswordConfirm onNext={handleNext} />,
       },
       {
-        title: "info",
+        title: 4,
         content: <NameAndDateOfBirth onNext={handleNext} />,
       },
       {
-        title: "avatar",
+        title: 5,
         content: <AvatarUpload onNext={handleNext} />,
       },
       {
-        title: "userId",
+        title: 6,
         content: <UserIdForm onSubmit={method.handleSubmit(onSubmit)} />,
       },
     ],
-    []
+    [],
   );
 
   function handleNext() {
@@ -87,14 +87,9 @@ const CredentialUserSignUpModal: FC<Props> = (props) => {
   function onSubmit(values: CredentialUserSignUp) {
     console.log(values);
   }
-  // console.log({ errors: method.formState.errors });
   return (
     <Credenza open={open} onOpenChange={handleOpenChange}>
-      <Form {...method}>
-        {/* <form onSubmit={method.handleSubmit(onSubmit)}> */}
-        {steps[step - 1].content}
-        {/* </form> */}
-      </Form>
+      <Form {...method}>{steps[step - 1].content}</Form>
     </Credenza>
   );
 };

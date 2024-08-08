@@ -1,4 +1,4 @@
-import { useCheckScriptLoad } from "@/hooks/auth/google/useCheckScriptLoad";
+import { useCheckScriptLoad } from "@/hooks/useCheckScriptLoad";
 import { FC, useEffect, useRef } from "react";
 
 type Props = {
@@ -11,7 +11,6 @@ export const GoogleSignUpButton: FC<Props> = (props) => {
 
   useEffect(() => {
     if (isGoogleScriptLoaded && window.google) {
-      console.log("render google signup button");
       window.google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         callback: props.onCredentialResponse,

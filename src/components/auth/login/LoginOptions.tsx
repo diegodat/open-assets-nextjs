@@ -9,12 +9,28 @@ import {
 import { Button } from "@/packages/components/ui/button";
 import { FC } from "react";
 import { GoogleSignInButton } from "../button/GoogleSignInButton";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 export const LoginOptions: FC<Props> = (props) => {
-  // console.log("isModalOpen", isModalOpen);
-
+  const router = useRouter();
+  const handleCredentialResponse = async (response: { credential: string }) => {
+    try {
+      const res = await fetch("/api/auth/google/callback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ credential: response.credential }),
+      });
+      if (res.ok) {
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <CredenzaContent>
       <CredenzaHeader>
@@ -25,7 +41,7 @@ export const LoginOptions: FC<Props> = (props) => {
       </CredenzaHeader>
 
       <CredenzaBody>
-        <GoogleSignInButton />
+        <GoogleSignInButton onCredentialResponse={handleCredentialResponse} />
       </CredenzaBody>
       <CredenzaFooter>
         <Button className="bg-[#1976D2] hover:bg-[#1976D2]">ログイン</Button>

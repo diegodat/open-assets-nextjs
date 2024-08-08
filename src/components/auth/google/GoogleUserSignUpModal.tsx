@@ -43,15 +43,15 @@ export const GoogleUserSignUpModal = (props: Props) => {
   const steps = useMemo(
     () => [
       {
-        title: "dateOfBirth",
+        id: 1,
         content: <DateOfBirthForm onNext={handleNext} />,
       },
       {
-        title: "userId",
+        id: 2,
         content: <UserIdForm onSubmit={method.handleSubmit(onSubmit)} />,
       },
     ],
-    []
+    [],
   );
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export const GoogleUserSignUpModal = (props: Props) => {
     const payload = { ...values, credential };
     console.log(payload);
   }
-  // console.log(is);
+
   return (
     <Credenza open={open} onOpenChange={handleOpenChange}>
       <Form {...method}>

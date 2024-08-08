@@ -1,5 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { axiosInstance, Response } from "./axiosInstance";
+import { axiosInstance } from "./axiosInstance";
+import { Response } from "./types";
 
 export const HttpClient = {
   get<T>(url: string, option?: AxiosRequestConfig) {
@@ -9,7 +10,7 @@ export const HttpClient = {
     return axiosInstance.post<T, AxiosResponse<Response<T>>>(
       url,
       params,
-      option
+      option,
     );
   },
   patch<T>(url: string, params: {}) {

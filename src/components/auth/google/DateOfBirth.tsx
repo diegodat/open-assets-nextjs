@@ -55,11 +55,9 @@ export const DateOfBirthForm: FC<Props> = (props) => {
     ]);
     console.log({ isValid });
     if (!isValid) {
-      console.error("invalid");
       return;
     }
     props.onNext();
-    // console.log(errors);
   };
   return (
     <CredenzaContent>

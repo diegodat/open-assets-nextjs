@@ -11,11 +11,11 @@ export const ReactQueryProvider: FC<PropsWithChildren> = ({ children }) => {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
-            retry: 3,
+            retry: false,
             staleTime: 1000 * 60 * 5,
           },
         },
-      })
+      }),
   );
   return (
     <QueryClientProvider client={queryClient}>
