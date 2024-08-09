@@ -6,20 +6,19 @@ import { JwtCookieToken } from "@/packages/constants/auth";
 
 export async function POST(request: Request) {
   try {
-    const text = await request.text();
-    const params = new URLSearchParams(text);
-    const credential = params.get("credential");
-    if (!credential) {
+    console.log("run route hanler");
+    const { code } = await request.json();
+    if (!code) {
       return NextResponse.json({
         message: "Invalid credential",
       });
     }
 
-    const response = await HttpClient.post<any>("api/google/login", {
-      credential,
+    const response = await HttpClient.post<any>("auth/google/callback", {
+      token: code,
     });
-    const token = response.data.data.token;
-    const decodedToken = jwt.decode(token);
+    const accessToken = response.data.data.accessToken;
+    const decodedToken = jwt.decode(accessToken);
     if (!decodedToken || typeof decodedToken === "string") {
       return NextResponse.json({
         message: "Invalid token",
@@ -28,20 +27,15 @@ export async function POST(request: Request) {
 
     cookies().set({
       name: JwtCookieToken,
-      value: "token",
+      value: accessToken,
       httpOnly: true,
       sameSite: "lax",
       maxAge: ((decodedToken.exp ?? 0) - (decodedToken.iat ?? 0)) * 1000,
       domain: process.env.COOKIE_DOMAIN || undefined,
     });
 
-    return NextResponse.json({ success: false }, { status: 401 });
-    // return NextResponse.redirect(new URL("/timeline", request.url));
+    return NextResponse.redirect(new URL("/threads", request.url));
   } catch (error) {
-    // return NextResponse.redirect(new URL("/auth/login", request.url));
-    return NextResponse.json(
-      { success: false, error: "Sign-in failed" },
-      { status: 500 },
-    );
+    return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 }

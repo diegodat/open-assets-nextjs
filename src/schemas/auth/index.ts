@@ -1,9 +1,21 @@
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/packages/constants/file";
 import { z } from "zod";
 
-export const LoginSchema = z.object({
+export const LoginParametersSchema = z.object({
   identity: z.string().trim().min(3).max(8),
-  password: z.string().min(8),
+  password: z.string(),
+});
+
+export const LoginResponseSchema = z.object({
+  user: z.object({
+    id: z.number(),
+    uuid: z.string().uuid({ message: "Invalid UUID" }),
+    email: z.string().email({ message: "Invalid email address" }),
+    dateOfBirth: z.string().date(),
+    avatar: z.string().nullable(),
+    accountId: z.string(),
+  }),
+  accessToken: z.string(),
 });
 
 export const GoogleUserSignUpSchema = z.object({
@@ -33,11 +45,11 @@ export const CredentialUserSignUpSchema = z
       .nullable()
       .refine(
         (file) => !file || file.size <= MAX_FILE_SIZE,
-        `ファイルサイズは${MAX_FILE_SIZE / 1000000}MB以下にしてください`
+        `ファイルサイズは${MAX_FILE_SIZE / 1000000}MB以下にしてください`,
       )
       .refine(
         (file) => !file || ACCEPTED_IMAGE_TYPES.includes(file.type),
-        "JPEGまたはPNG、WEBP形式の画像をアップロードしてください"
+        "JPEGまたはPNG、WEBP形式の画像をアップロードしてください",
       ),
     nickname: z.string().min(3).max(10),
     birthday: z.object({

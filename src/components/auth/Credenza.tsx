@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
   Dialog,
   DialogClose,
@@ -23,7 +23,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/packages/components/ui/drawer";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { cn } from "@/packages/lib/utils";
 
 interface BaseProps {
   children: React.ReactNode;
@@ -139,12 +139,12 @@ const CredenzaFooter = ({ className, children, ...props }: CredenzaProps) => {
 
 export {
   Credenza,
-  CredenzaTrigger,
+  CredenzaBody,
   CredenzaClose,
   CredenzaContent,
   CredenzaDescription,
+  CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-  CredenzaBody,
-  CredenzaFooter,
+  CredenzaTrigger,
 };

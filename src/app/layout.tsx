@@ -5,7 +5,7 @@ import Script from "next/script";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { WithAuth } from "@/hocs/WithAuth";
 import { AuthProvider } from "@/providers/AuthProvider";
-import { Toaster } from "@/packages/components/ui/toaster";
+import "@radix-ui/themes/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Script
+      {/* <Script
         src="https://accounts.google.com/gsi/client?hl=ja"
-        strategy="lazyOnload"
+        strategy="beforeInteractive"
         async
         defer
-      />
+        id="script_google"
+      /> */}
       <body className={inter.className}>
         <main>
           <ReactQueryProvider>
@@ -35,8 +36,6 @@ export default function RootLayout({
             </WithAuth>
           </ReactQueryProvider>
         </main>
-
-        <Toaster />
       </body>
     </html>
   );

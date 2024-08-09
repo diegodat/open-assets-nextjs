@@ -1,11 +1,10 @@
 "use client";
 
 import { GoogleButton } from "@/components/auth/GoogleButton";
-import { useRenderGoogleButton } from "@/hooks/auth/google/useRenderGoogleButton";
-import { useStore } from "@stores/store";
+import { useStore } from "@/stores/store";
 
 export default function Login() {
-  useRenderGoogleButton();
+  // useRenderGoogleButton();
   const user = useStore((state) => state.user);
   console.log(user);
   return (

@@ -6,20 +6,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DateOfBirthForm } from "./DateOfBirth";
 import { UserIdForm } from "./UserId";
 import { Form } from "@/packages/components/ui/form";
-import { GoogleUserSignUpSchema } from "@/schemas/auth";
 import * as jwt from "jsonwebtoken";
-import { OAuth2Client } from "google-auth-library";
 import { useRegisterUser } from "@/hooks/apis/user/useRegisterUser";
 import { useToast } from "@/packages/components/ui/use-toast";
 import { Button } from "@/packages/components/ui/button";
+import { GoogleUserSignUp } from "@/schemas/auth/types";
+import { GoogleUserSignUpSchema } from "@/schemas/auth";
 
 type Props = {
   open: boolean;
   credential: string | undefined;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
-export type GoogleUserSignUp = z.infer<typeof GoogleUserSignUpSchema>;
 
 export const GoogleUserSignUpModal = (props: Props) => {
   const { open, credential, onOpenChange } = props;
@@ -50,7 +48,7 @@ export const GoogleUserSignUpModal = (props: Props) => {
         content: <UserIdForm onSubmit={method.handleSubmit(onSubmit)} />,
       },
     ],
-    []
+    [],
   );
 
   useEffect(() => {

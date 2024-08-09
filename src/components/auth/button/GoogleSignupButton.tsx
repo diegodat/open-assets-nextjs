@@ -1,4 +1,4 @@
-import { useCheckScriptLoad } from "@/hooks/useCheckScriptLoad";
+import { useLoadScript } from "@/hooks/useCheckScriptLoad";
 import { FC, useEffect, useRef } from "react";
 
 type Props = {
@@ -6,11 +6,11 @@ type Props = {
 };
 
 export const GoogleSignUpButton: FC<Props> = (props) => {
-  const isGoogleScriptLoaded = useCheckScriptLoad();
   const buttonRef = useRef(null);
+  const isLoaded = useLoadScript();
 
   useEffect(() => {
-    if (isGoogleScriptLoaded && window.google) {
+    if (isLoaded && buttonRef.current && window.google) {
       window.google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         callback: props.onCredentialResponse,
@@ -22,11 +22,13 @@ export const GoogleSignUpButton: FC<Props> = (props) => {
         logo_alignment: "left",
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         login_uri: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
-        // text: "signup_with",
       });
       window.google.accounts.id.prompt();
     }
-  }, [isGoogleScriptLoaded]);
+    return () => {
+      // document.body.removeChild(script);
+    };
+  }, [buttonRef.current, isLoaded]);
 
   return (
     <>

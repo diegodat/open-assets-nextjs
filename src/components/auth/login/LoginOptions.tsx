@@ -12,27 +12,13 @@ import { GoogleSignInButton } from "../button/GoogleSignInButton";
 import { useRouter } from "next/navigation";
 import { Input } from "@/packages/components/ui/input";
 import { Label } from "@/packages/components/ui/label";
+import { GoogleButton } from "../button/GoogleButton";
 
-type Props = {};
+type Props = {
+  onClick: () => void;
+};
 
 export const LoginOptions: FC<Props> = (props) => {
-  const router = useRouter();
-  const handleCredentialResponse = async (response: { credential: string }) => {
-    try {
-      const res = await fetch("/api/auth/google/callback", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ credential: response.credential }),
-      });
-      if (res.ok) {
-        router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <CredenzaContent>
       <CredenzaHeader>
@@ -43,7 +29,8 @@ export const LoginOptions: FC<Props> = (props) => {
       </CredenzaHeader>
 
       <CredenzaBody>
-        <GoogleSignInButton onCredentialResponse={handleCredentialResponse} />
+        <GoogleButton onClick={props.onClick} />
+        {/* <GoogleSignInButton /> */}
         <div className="bg-[#212121] w-[100%] h-[0.33px] my-2"></div>
         <Label>メールアドレス/ID/アカウント名</Label>
         <Input />

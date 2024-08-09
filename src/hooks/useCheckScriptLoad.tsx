@@ -2,24 +2,20 @@
 
 import { useState, useEffect } from "react";
 
-export function useCheckScriptLoad() {
+export function useLoadScript() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.google) {
-      setIsLoaded(true);
-    } else {
-      const checkGoogleScript = setInterval(() => {
-        if (typeof window !== "undefined" && window.google) {
-          setIsLoaded(true);
-          clearInterval(checkGoogleScript);
-        }
-      }, 100);
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client?hl=ja";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => setIsLoaded(true);
+    document.body.appendChild(script);
 
-      return () => {
-        clearInterval(checkGoogleScript);
-      };
-    }
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 
   return isLoaded;

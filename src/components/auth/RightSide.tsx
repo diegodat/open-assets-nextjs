@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleSignUpButton } from "./button/GoogleSignupButton";
 import * as jwt from "jsonwebtoken";
 import { Button } from "@/packages/components/ui/button";
@@ -8,13 +8,14 @@ import { GoogleUserSignUpModal } from "./google/GoogleUserSignUpModal";
 import CredentialUserSignUpModal from "./credential/CredentialUserSignUpModal";
 import { LoginModal } from "./login/LoginModal";
 import { useToast } from "@/packages/components/ui/use-toast";
-import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { GoogleButton } from "./button/GoogleButton";
 
 type Props = {};
 
 const RightSide = (props: Props) => {
   const [credentialGoogle, setCredentialGoogle] = useState<string | undefined>(
-    undefined
+    undefined,
   );
   const { toast } = useToast();
   const [googleUserSignUpModalOpen, setGoogleUserSignUpModalOpen] =

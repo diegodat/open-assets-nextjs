@@ -11,13 +11,12 @@ import { AvatarUpload } from "./AvatarUpload";
 import { UserIdForm } from "./UserId";
 import { Credenza } from "@/components/auth/Credenza";
 import { CredentialUserSignUpSchema } from "@/schemas/auth";
+import { CredentialUserSignUp } from "@/schemas/auth/types";
 
 type Props = {
   open: boolean;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
-export type CredentialUserSignUp = z.infer<typeof CredentialUserSignUpSchema>;
 
 const CredentialUserSignUpModal: FC<Props> = (props) => {
   const { open, onOpenChange } = props;

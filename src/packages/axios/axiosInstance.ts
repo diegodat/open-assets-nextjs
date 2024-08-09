@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from "axios";
-import { Response } from "./types";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { ErrorResponse, Response } from "./types";
 import { REQUEST_TIMEOUT } from "../constants/axios";
 
 const axiosInstance = axios.create({
@@ -14,7 +14,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 let refreshTokenPromise: null | Promise<any> = null;
@@ -22,25 +22,26 @@ axiosInstance.interceptors.response.use(
   <T>(response: AxiosResponse<Response<T>>): AxiosResponse<Response<T>> => {
     return { ...response, data: response.data };
   },
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response.status !== 401 || originalRequest._retry) {
-      return Promise.reject(error.response);
-    }
-    originalRequest._retry = true;
-    if (!refreshTokenPromise) {
-      refreshTokenPromise = refreshToken().finally(() => {
-        refreshTokenPromise = null;
-      });
-    }
+  async (error: AxiosError<ErrorResponse>) => {
+    // const originalRequest = error.config;
+    // if (error.response.status !== 401 || originalRequest._retry) {
+    //   return Promise.reject(error.response);
+    // }
+    // originalRequest._retry = true;
+    // if (!refreshTokenPromise) {
+    //   refreshTokenPromise = refreshToken().finally(() => {
+    //     refreshTokenPromise = null;
+    //   });
+    // }
 
-    try {
-      await refreshTokenPromise;
-      return axiosInstance(originalRequest);
-    } catch (refreshError) {
-      return Promise.reject(refreshError);
-    }
-  }
+    // try {
+    //   await refreshTokenPromise;
+    //   return axiosInstance(originalRequest);
+    // } catch (refreshError) {
+    //   return Promise.reject(refreshError);
+    // }
+    return Promise.reject(error.response);
+  },
 );
 
 const refreshToken = async () => {
@@ -48,7 +49,7 @@ const refreshToken = async () => {
     const response = await axios.post(
       "/auth/refresh",
       {},
-      { withCredentials: true }
+      { withCredentials: true },
     );
     return response.data.access_token;
   } catch (error) {
