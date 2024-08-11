@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import {
   Dialog,
   DialogClose,
@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/packages/components/ui/dialog";
+} from '@/packages/components/ui/dialog';
 import {
   Drawer,
   DrawerClose,
@@ -22,8 +22,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/packages/components/ui/drawer";
-import { cn } from "@/packages/lib/utils";
+} from '@/packages/components/ui/drawer';
+import { cn } from '@/packages/lib/utils';
 
 interface BaseProps {
   children: React.ReactNode;
@@ -38,8 +38,9 @@ interface CredenzaProps extends BaseProps {
   className?: string;
   asChild?: true;
 }
+type CredenzaContentProps = React.ComponentProps<typeof DialogContent> & React.ComponentProps<typeof DrawerContent>;
 
-const desktop = "(min-width: 768px)";
+const desktop = '(min-width: 768px)';
 
 const Credenza = ({ children, ...props }: RootCredenzaProps) => {
   const isDesktop = useMediaQuery(desktop);
@@ -70,7 +71,7 @@ const CredenzaClose = ({ className, children, ...props }: CredenzaProps) => {
   );
 };
 
-const CredenzaContent = ({ className, children, ...props }: CredenzaProps) => {
+const CredenzaContent = ({ className, children, ...props }: CredenzaContentProps) => {
   const isDesktop = useMediaQuery(desktop);
   const CredenzaContent = isDesktop ? DialogContent : DrawerContent;
 
@@ -81,11 +82,7 @@ const CredenzaContent = ({ className, children, ...props }: CredenzaProps) => {
   );
 };
 
-const CredenzaDescription = ({
-  className,
-  children,
-  ...props
-}: CredenzaProps) => {
+const CredenzaDescription = ({ className, children, ...props }: CredenzaProps) => {
   const isDesktop = useMediaQuery(desktop);
   const CredenzaDescription = isDesktop ? DialogDescription : DrawerDescription;
 
@@ -120,7 +117,7 @@ const CredenzaTitle = ({ className, children, ...props }: CredenzaProps) => {
 
 const CredenzaBody = ({ className, children, ...props }: CredenzaProps) => {
   return (
-    <div className={cn("px-4 md:px-0", className)} {...props}>
+    <div className={cn('px-4 md:px-0', className)} {...props}>
       {children}
     </div>
   );

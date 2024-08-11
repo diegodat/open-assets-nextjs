@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Credenza,
   CredenzaBody,
@@ -9,9 +9,8 @@ import {
   CredenzaHeader,
   CredenzaTitle,
   CredenzaTrigger,
-} from "@/components/auth/Credenza";
-import { useFormContext } from "react-hook-form";
-import { CredentialUserSignUp } from "./CredentialUserSignUpModal";
+} from '@/components/auth/Credenza';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -19,9 +18,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/packages/components/ui/form";
-import { Input } from "@/packages/components/ui/input";
-import { Button } from "@/packages/components/ui/button";
+} from '@/packages/components/ui/form';
+import { Input } from '@/packages/components/ui/input';
+import { Button } from '@/packages/components/ui/button';
+import { CredentialUserSignUp } from '@/schemas/auth/types';
 
 type Props = {
   onNext: () => void;
@@ -45,12 +45,12 @@ export const PasswordConfirm = (props: Props) => {
   };
 
   const validateEmailFields = async (): Promise<boolean> => {
-    const isValid = await trigger(["password", "confirmPassword"]);
+    const isValid = await trigger(['password', 'confirmPassword']);
     if (isValid) {
-      const emailValue = getValues("password");
-      const confirmEmailValue = getValues("confirmPassword");
+      const emailValue = getValues('password');
+      const confirmEmailValue = getValues('confirmPassword');
       if (emailValue !== confirmEmailValue) {
-        setError("confirmPassword", { message: "Password does not match" });
+        setError('confirmPassword', { message: 'Password does not match' });
         return false;
       }
       return true;
@@ -62,9 +62,7 @@ export const PasswordConfirm = (props: Props) => {
   return (
     <CredenzaContent>
       <CredenzaHeader>
-        <CredenzaTitle className="text-left text-[#212121] text-[20px] font-[600]">
-          パスワード入力
-        </CredenzaTitle>
+        <CredenzaTitle className="text-left text-[#212121] text-[20px] font-[600]">パスワード入力</CredenzaTitle>
         <CredenzaDescription className="text-left text-[#212121] text-[12px] leading-[21px]">
           アカウントログイン時に利用するお好みのパスワードを入力してください。
           大文字、記号を含む8文字以上の英数字の組み合わせで強力なパスワードを設定してください。
@@ -79,7 +77,14 @@ export const PasswordConfirm = (props: Props) => {
             <FormItem>
               <FormLabel>パスワード</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="" {...field} />
+                <Input
+                  type="password"
+                  placeholder=""
+                  {...field}
+                  onBlur={() => {
+                    trigger(['password']);
+                  }}
+                />
               </FormControl>
               <FormDescription></FormDescription>
               <FormMessage />
@@ -94,7 +99,14 @@ export const PasswordConfirm = (props: Props) => {
             <FormItem>
               <FormLabel>パスワード（確認用）</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="" {...field} />
+                <Input
+                  type="password"
+                  placeholder=""
+                  {...field}
+                  onBlur={() => {
+                    trigger(['confirmPassword']);
+                  }}
+                />
               </FormControl>
               <FormDescription></FormDescription>
               <FormMessage />
@@ -104,10 +116,7 @@ export const PasswordConfirm = (props: Props) => {
       </CredenzaBody>
 
       <CredenzaFooter>
-        <Button
-          className="bg-[#1976D2] hover:bg-[#1976D2]"
-          onClick={handleSubmit}
-        >
+        <Button className="bg-[#1976D2] hover:bg-[#1976D2]" onClick={handleSubmit}>
           次へ
         </Button>
         <CredenzaClose asChild>

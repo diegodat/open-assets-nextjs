@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { ErrorResponse, Response } from "./types";
-import { REQUEST_TIMEOUT } from "../constants/axios";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { ErrorResponse, Response } from './types';
+import { REQUEST_TIMEOUT } from '../constants/axios';
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -46,11 +46,7 @@ axiosInstance.interceptors.response.use(
 
 const refreshToken = async () => {
   try {
-    const response = await axios.post(
-      "/auth/refresh",
-      {},
-      { withCredentials: true },
-    );
+    const response = await axios.post('/auth/refresh', {}, { withCredentials: true });
     return response.data.access_token;
   } catch (error) {
     throw error;

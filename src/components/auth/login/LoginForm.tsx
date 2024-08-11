@@ -6,11 +6,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/packages/components/ui/form";
-import { LoginParametersSchema } from "@/schemas/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
+} from '@/packages/components/ui/form';
+import { LoginParametersSchema } from '@/schemas/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import {
   CredenzaBody,
   CredenzaClose,
@@ -18,29 +18,37 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from "@/components/auth/Credenza";
-import { Input } from "@/packages/components/ui/input";
-import { Button } from "@/packages/components/ui/button";
-import { LoginParameters } from "@/schemas/auth/types";
-import { useLogin } from "@/hooks/apis/user/useLogin";
+} from '@/components/auth/Credenza';
+import { Input } from '@/packages/components/ui/input';
+import { Button } from '@/packages/components/ui/button';
+import { LoginParameters } from '@/schemas/auth/types';
+import { useLogin } from '@/hooks/apis/user/useLogin';
+import { ValidationError } from '@/packages/utils/zod/validateResponse';
 
 type Props = {};
 
 export const LoginForm = (props: Props) => {
   const login = useLogin();
   const method = useForm<LoginParameters>({
+    defaultValues: {
+      identity: '',
+      password: '',
+    },
     resolver: zodResolver(LoginParametersSchema),
-    mode: "onBlur",
-    reValidateMode: "onChange",
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = async (data: LoginParameters) => {
     try {
-      console.log("data", data);
       const response = await login.mutateAsync(data);
-      console.log("response", response);
+      console.log('response', response);
     } catch (error) {
-      console.log("error", error);
+      if (error instanceof ValidationError) {
+        console.error('Validation failed:', error.errors);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
     }
   };
   return (
@@ -48,9 +56,7 @@ export const LoginForm = (props: Props) => {
       <form onSubmit={method.handleSubmit(onSubmit)} className="space-y-8">
         <CredenzaContent>
           <CredenzaHeader>
-            <CredenzaTitle className="text-left text-[#212121] text-[20px] font-[600]">
-              パスワードを入力
-            </CredenzaTitle>
+            <CredenzaTitle className="text-left text-[#212121] text-[20px] font-[600]">パスワードを入力</CredenzaTitle>
           </CredenzaHeader>
           <CredenzaBody>
             <FormField
@@ -84,17 +90,11 @@ export const LoginForm = (props: Props) => {
             />
           </CredenzaBody>
           <CredenzaFooter>
-            <Button
-              className="bg-[#1976D2] hover:bg-[#1976D2]"
-              onClick={method.handleSubmit(onSubmit)}
-              type="submit"
-            >
+            <Button className="bg-[#1976D2] hover:bg-[#1976D2]" onClick={method.handleSubmit(onSubmit)} type="submit">
               ログイン
             </Button>
             <CredenzaClose asChild>
-              <Button variant="link">
-                アカウントをお持ちでない場合は新規登録
-              </Button>
+              <Button variant="link">アカウントをお持ちでない場合は新規登録</Button>
             </CredenzaClose>
           </CredenzaFooter>
         </CredenzaContent>

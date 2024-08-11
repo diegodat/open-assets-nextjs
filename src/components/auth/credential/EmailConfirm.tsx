@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Credenza,
   CredenzaBody,
@@ -9,9 +9,8 @@ import {
   CredenzaHeader,
   CredenzaTitle,
   CredenzaTrigger,
-} from "@/components/auth/Credenza";
-import { useFormContext } from "react-hook-form";
-import { CredentialUserSignUp } from "./CredentialUserSignUpModal";
+} from '@/components/auth/Credenza';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -19,9 +18,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/packages/components/ui/form";
-import { Input } from "@/packages/components/ui/input";
-import { Button } from "@/packages/components/ui/button";
+} from '@/packages/components/ui/form';
+import { Input } from '@/packages/components/ui/input';
+import { Button } from '@/packages/components/ui/button';
+import { CredentialUserSignUp } from '@/schemas/auth/types';
 
 type Props = {
   onNext: () => void;
@@ -45,12 +45,12 @@ export const EmailConfirm = (props: Props) => {
   };
 
   const validateEmailFields = async (): Promise<boolean> => {
-    const isValid = await trigger(["email", "confirmEmail"]);
+    const isValid = await trigger(['email', 'confirmEmail']);
     if (isValid) {
-      const emailValue = getValues("email");
-      const confirmEmailValue = getValues("confirmEmail");
+      const emailValue = getValues('email');
+      const confirmEmailValue = getValues('confirmEmail');
       if (emailValue !== confirmEmailValue) {
-        setError("confirmEmail", { message: "Email does not match" });
+        setError('confirmEmail', { message: 'Email does not match' });
         return false;
       }
       return true;
@@ -62,9 +62,7 @@ export const EmailConfirm = (props: Props) => {
   return (
     <CredenzaContent>
       <CredenzaHeader>
-        <CredenzaTitle className="text-left text-[#212121] text-[20px] font-[600]">
-          メールアドレスを入力
-        </CredenzaTitle>
+        <CredenzaTitle className="text-left text-[#212121] text-[20px] font-[600]">メールアドレスを入力</CredenzaTitle>
         <CredenzaDescription className="text-left text-[#212121] text-[12px] leading-[21px]">
           アカウント作成には、受信可能な独自ドメインのメールアドレスや、Gmailアドレスを正確に入力してください。
         </CredenzaDescription>
@@ -82,6 +80,9 @@ export const EmailConfirm = (props: Props) => {
                   type="email"
                   placeholder="openassets@gmail.com"
                   {...field}
+                  onBlur={() => {
+                    trigger(['email']);
+                  }}
                 />
               </FormControl>
               <FormDescription></FormDescription>
@@ -101,6 +102,9 @@ export const EmailConfirm = (props: Props) => {
                   type="email"
                   placeholder="openassets@gmail.com"
                   {...field}
+                  onBlur={() => {
+                    trigger(['confirmEmail']);
+                  }}
                 />
               </FormControl>
               <FormDescription></FormDescription>
@@ -111,10 +115,7 @@ export const EmailConfirm = (props: Props) => {
       </CredenzaBody>
 
       <CredenzaFooter>
-        <Button
-          className="bg-[#1976D2] hover:bg-[#1976D2]"
-          onClick={handleSubmit}
-        >
+        <Button className="bg-[#1976D2] hover:bg-[#1976D2]" onClick={handleSubmit}>
           次へ
         </Button>
         <CredenzaClose asChild>

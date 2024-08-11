@@ -8,7 +8,7 @@ import {
   CredenzaHeader,
   CredenzaTitle,
   CredenzaTrigger,
-} from "@/components/auth/Credenza";
+} from '@/components/auth/Credenza';
 import {
   FormControl,
   FormDescription,
@@ -16,19 +16,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/packages/components/ui/form";
-import React, { FC } from "react";
-import { GoogleUserSignUp } from "./GoogleUserSignUpModal";
-import { useFormContext } from "react-hook-form";
-import { Input } from "@/packages/components/ui/input";
-import { Button } from "@/packages/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/packages/components/ui/select";
+} from '@/packages/components/ui/form';
+import React, { FC } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { Input } from '@/packages/components/ui/input';
+import { Button } from '@/packages/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/packages/components/ui/select';
+import { GoogleUserSignUp } from '@/schemas/auth/types';
 
 type Props = {
   onNext: () => void;
@@ -48,11 +42,7 @@ export const DateOfBirthForm: FC<Props> = (props) => {
   } = useFormContext<GoogleUserSignUp>();
 
   const handleSubmit = async () => {
-    const isValid = await trigger([
-      "dateOfBirth.year",
-      "dateOfBirth.month",
-      "dateOfBirth.day",
-    ]);
+    const isValid = await trigger(['dateOfBirth.year', 'dateOfBirth.month', 'dateOfBirth.day']);
     if (!isValid) {
       return;
     }
@@ -61,9 +51,7 @@ export const DateOfBirthForm: FC<Props> = (props) => {
   return (
     <CredenzaContent>
       <CredenzaHeader>
-        <CredenzaTitle className="text-left text-[#212121] text-[20px] font-[600]">
-          生年月日
-        </CredenzaTitle>
+        <CredenzaTitle className="text-left text-[#212121] text-[20px] font-[600]">生年月日</CredenzaTitle>
         <CredenzaDescription className="text-left text-[#212121] text-[12px] leading-[21px]">
           この情報は公開されません。このアカウントをビジネス、ペットなどに使う場合でも、ご自身の年齢を正確にご入力してください。
           後に、身分証確認書類の提出時にデータを利用する可能性があります。
@@ -170,11 +158,7 @@ export const DateOfBirthForm: FC<Props> = (props) => {
         />
       </CredenzaBody>
       <CredenzaFooter>
-        <Button
-          className="bg-[#1976D2] hover:bg-[#1976D2]"
-          type="submit"
-          onClick={handleSubmit}
-        >
+        <Button className="bg-[#1976D2] hover:bg-[#1976D2]" type="submit" onClick={handleSubmit}>
           次へ
         </Button>
         <CredenzaClose asChild>

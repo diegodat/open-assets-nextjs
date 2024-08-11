@@ -5,14 +5,14 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from "@/components/auth/Credenza";
-import { Button } from "@/packages/components/ui/button";
-import { FC } from "react";
-import { GoogleSignInButton } from "../button/GoogleSignInButton";
-import { useRouter } from "next/navigation";
-import { Input } from "@/packages/components/ui/input";
-import { Label } from "@/packages/components/ui/label";
-import { GoogleButton } from "../button/GoogleButton";
+} from '@/components/auth/Credenza';
+import { Button } from '@/packages/components/ui/button';
+import { FC } from 'react';
+import { GoogleSignInButton } from '../button/GoogleSignInButton';
+import { useRouter } from 'next/navigation';
+import { Input } from '@/packages/components/ui/input';
+import { Label } from '@/packages/components/ui/label';
+import { GoogleButton } from '../button/GoogleButton';
 
 type Props = {
   onClick: () => void;
@@ -30,13 +30,16 @@ export const LoginOptions: FC<Props> = (props) => {
 
       <CredenzaBody>
         <GoogleButton onClick={props.onClick} />
-        {/* <GoogleSignInButton /> */}
-        <div className="bg-[#212121] w-[100%] h-[0.33px] my-2"></div>
+        <div className="flex justify-center items-center gap-[5px] my-[10px]">
+          <div className="bg-[#212121] w-full h-[0.33px] my-2"></div>
+          <span className="text-[#212121] text-[10px] leading-[12px] whitespace-nowrap">または</span>
+          <div className="bg-[#212121] w-full h-[0.33px] my-2"></div>
+        </div>
         <Label>メールアドレス/ID/アカウント名</Label>
         <Input />
       </CredenzaBody>
-      <CredenzaFooter>
-        <Button className="bg-[#1976D2] hover:bg-[#1976D2]">ログイン</Button>
+      <CredenzaFooter className="sm:flex-col gap-[10px] items-center ">
+        <Button className="bg-[#1976D2] hover:bg-[#1976D2] h-auto sm:w-[140px] py-[14px] font-[600]">ログイン</Button>
         <CredenzaClose asChild>
           <Button variant="link">アカウントをお持ちでない場合は新規登録</Button>
         </CredenzaClose>

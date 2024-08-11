@@ -6,8 +6,8 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from "@/components/auth/Credenza";
-import { Button } from "@/packages/components/ui/button";
+} from '@/components/auth/Credenza';
+import { Button } from '@/packages/components/ui/button';
 import {
   FormControl,
   FormDescription,
@@ -15,11 +15,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/packages/components/ui/form";
-import { Input } from "@/packages/components/ui/input";
-import { FC } from "react";
-import { useFormContext } from "react-hook-form";
-import { type CredentialUserSignUp } from "./CredentialUserSignUpModal";
+} from '@/packages/components/ui/form';
+import { Input } from '@/packages/components/ui/input';
+import { CredentialUserSignUp } from '@/schemas/auth/types';
+import { FC } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 type Props = {
   onSubmit: () => void;
@@ -34,7 +34,7 @@ export const UserIdForm: FC<Props> = (props) => {
     trigger,
   } = useFormContext<CredentialUserSignUp>();
   const handleSubmit = async () => {
-    const isValid = await trigger("userId");
+    const isValid = await trigger('userId');
     if (!isValid) return;
     props.onSubmit();
   };
@@ -66,11 +66,7 @@ export const UserIdForm: FC<Props> = (props) => {
         />
       </CredenzaBody>
       <CredenzaFooter>
-        <Button
-          type="submit"
-          className="bg-[#1976D2] hover:bg-[#1976D2]"
-          onClick={handleSubmit}
-        >
+        <Button type="submit" className="bg-[#1976D2] hover:bg-[#1976D2]" onClick={handleSubmit}>
           次へ
         </Button>
         <CredenzaClose asChild>

@@ -1,5 +1,5 @@
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/packages/constants/file";
-import { z } from "zod";
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/packages/constants/file';
+import { z } from 'zod';
 
 export const LoginParametersSchema = z.object({
   identity: z.string().trim().min(3).max(8),
@@ -9,14 +9,21 @@ export const LoginParametersSchema = z.object({
 export const LoginResponseSchema = z.object({
   user: z.object({
     id: z.number(),
-    uuid: z.string().uuid({ message: "Invalid UUID" }),
-    email: z.string().email({ message: "Invalid email address" }),
+    uuid: z.string().uuid({ message: 'Invalid UUID' }),
+    email: z.string().email({ message: 'Invalid email address' }),
     dateOfBirth: z.string().date(),
     avatar: z.string().nullable(),
     accountId: z.string(),
   }),
   accessToken: z.string(),
 });
+
+// export const LoginResponseSchema = z.object({
+//   id: z.number(),
+//   email: z.string().email({ message: 'Invalid email address' }),
+//   name: z.string(),
+//   // avatar: z.string().nullable(),
+// });
 
 export const GoogleUserSignUpSchema = z.object({
   dateOfBirth: z.object({
@@ -27,16 +34,14 @@ export const GoogleUserSignUpSchema = z.object({
   accountId: z.string().min(3).max(20),
 });
 
-const emailSchema = z.string().email("Invalid email address");
-const passwordSchema = z.string().min(8).max(20);
+const emailSchema = z.string().min(1, 'Email is require').email('Invalid email address');
+const passwordSchema = z.string().min(1, 'Password is required').min(8, 'Password must be at least 8 characters');
 
 export const CredentialUserSignUpSchema = z
   .object({
     email: emailSchema,
     confirmEmail: emailSchema,
-    verificationCode: z
-      .string()
-      .length(4, "verification code must be 4 number"),
+    verificationCode: z.string().length(4, 'verification code must be 4 number'),
     password: passwordSchema,
     confirmPassword: passwordSchema,
     profileImage: z
@@ -49,7 +54,7 @@ export const CredentialUserSignUpSchema = z
       )
       .refine(
         (file) => !file || ACCEPTED_IMAGE_TYPES.includes(file.type),
-        "JPEGまたはPNG、WEBP形式の画像をアップロードしてください",
+        'JPEGまたはPNG、WEBP形式の画像をアップロードしてください',
       ),
     nickname: z.string().min(3).max(10),
     birthday: z.object({
@@ -57,17 +62,13 @@ export const CredentialUserSignUpSchema = z
       month: z.number().min(1).max(12),
       day: z.number().min(1).max(31),
     }),
-    userId: z
-      .string()
-      .min(3)
-      .max(5)
-      .regex(/^\d+$/, { message: "Input must only contain numbers" }),
+    userId: z.string().min(3).max(5).regex(/^\d+$/, { message: 'Input must only contain numbers' }),
   })
   .refine((data) => data.email === data.confirmEmail, {
-    message: "Email does not match",
-    path: ["confirmEmail"],
+    message: 'Email does not match',
+    path: ['confirmEmail'],
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Password does not match",
-    path: ["confirmPassword"],
+    message: 'Password does not match',
+    path: ['confirmPassword'],
   });

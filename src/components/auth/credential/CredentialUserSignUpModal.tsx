@@ -1,17 +1,17 @@
-import { Form } from "@/packages/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { FC, useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { EmailConfirm } from "./EmailConfirm";
-import { EmailVerify } from "./EmailVerify";
-import { PasswordConfirm } from "./PasswordConfirm";
-import { NameAndDateOfBirth } from "./NameAndDateOfBirth";
-import { AvatarUpload } from "./AvatarUpload";
-import { UserIdForm } from "./UserId";
-import { Credenza } from "@/components/auth/Credenza";
-import { CredentialUserSignUpSchema } from "@/schemas/auth";
-import { CredentialUserSignUp } from "@/schemas/auth/types";
+import { Form } from '@/packages/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { EmailConfirm } from './EmailConfirm';
+import { EmailVerify } from './EmailVerify';
+import { PasswordConfirm } from './PasswordConfirm';
+import { NameAndDateOfBirth } from './NameAndDateOfBirth';
+import { AvatarUpload } from './AvatarUpload';
+import { UserIdForm } from './UserId';
+import { Credenza } from '@/components/auth/Credenza';
+import { CredentialUserSignUpSchema } from '@/schemas/auth';
+import { CredentialUserSignUp } from '@/schemas/auth/types';
 
 type Props = {
   open: boolean;
@@ -23,18 +23,17 @@ const CredentialUserSignUpModal: FC<Props> = (props) => {
   const [step, setStep] = useState(1);
   const method = useForm<CredentialUserSignUp>({
     defaultValues: {
-      email: "",
-      confirmEmail: "",
-      password: "",
-      confirmPassword: "",
-      nickname: "",
-      userId: "",
+      email: '',
+      confirmEmail: '',
+      password: '',
+      confirmPassword: '',
+      nickname: '',
+      userId: '',
       profileImage: null,
-      verificationCode: "",
+      verificationCode: '',
     },
     resolver: zodResolver(CredentialUserSignUpSchema),
-    mode: "onBlur",
-    reValidateMode: "onChange",
+    reValidateMode: 'onBlur',
   });
 
   useEffect(() => {

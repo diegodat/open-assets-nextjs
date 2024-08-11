@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef } from 'react';
 import {
   Credenza,
   CredenzaBody,
@@ -9,9 +9,8 @@ import {
   CredenzaHeader,
   CredenzaTitle,
   CredenzaTrigger,
-} from "@/components/auth/Credenza";
-import { useFormContext } from "react-hook-form";
-import { CredentialUserSignUp } from "./CredentialUserSignUpModal";
+} from '@/components/auth/Credenza';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -19,14 +18,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/packages/components/ui/form";
-import { Input } from "@/packages/components/ui/input";
-import { Button } from "@/packages/components/ui/button";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/packages/components/ui/avatar";
+} from '@/packages/components/ui/form';
+import { Input } from '@/packages/components/ui/input';
+import { Button } from '@/packages/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/packages/components/ui/avatar';
+import { CredentialUserSignUp } from '@/schemas/auth/types';
 
 type Props = {
   onNext: () => void;
@@ -46,10 +42,10 @@ export const AvatarUpload = (props: Props) => {
   // const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
 
   const previewUrl = useMemo(() => {
-    const file = getValues("profileImage") as Blob;
-    if (!file) return "";
+    const file = getValues('profileImage') as Blob;
+    if (!file) return '';
     return URL.createObjectURL(file);
-  }, [watch("profileImage")]);
+  }, [watch('profileImage')]);
 
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -60,20 +56,20 @@ export const AvatarUpload = (props: Props) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      if (selectedFile.type.startsWith("image/")) {
-        setValue("profileImage", selectedFile);
+      if (selectedFile.type.startsWith('image/')) {
+        setValue('profileImage', selectedFile);
       } else {
-        setError("profileImage", { message: "Please select an image file." });
-        setValue("profileImage", null);
+        setError('profileImage', { message: 'Please select an image file.' });
+        setValue('profileImage', null);
       }
     }
   };
 
   const handleSubmit = async () => {
-    const isValid = await trigger("profileImage");
-    const profileImage = getValues("profileImage");
+    const isValid = await trigger('profileImage');
+    const profileImage = getValues('profileImage');
     if (!isValid || !profileImage) {
-      console.error("profileImage is not available");
+      console.error('profileImage is not available');
       return;
     }
     props.onNext();
@@ -99,21 +95,12 @@ export const AvatarUpload = (props: Props) => {
               {/* <FormLabel>ユーザー名</FormLabel> */}
               <FormControl>
                 <>
-                  <Avatar
-                    className="w-24 h-24 mb-2 cursor-pointer"
-                    onClick={handleButtonClick}
-                  >
+                  <Avatar className="w-24 h-24 mb-2 cursor-pointer" onClick={handleButtonClick}>
                     {previewUrl ? (
                       <AvatarImage src={previewUrl} alt="Avatar" />
                     ) : (
                       <AvatarFallback>
-                        <svg
-                          width="15"
-                          height="15"
-                          viewBox="0 0 15 15"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
+                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <svg
                             width="15"
                             height="15"
@@ -149,11 +136,7 @@ export const AvatarUpload = (props: Props) => {
         />
       </CredenzaBody>
       <CredenzaFooter>
-        <Button
-          className="bg-[#1976D2] hover:bg-[#1976D2]"
-          type="submit"
-          onClick={handleSubmit}
-        >
+        <Button className="bg-[#1976D2] hover:bg-[#1976D2]" type="submit" onClick={handleSubmit}>
           次へ
         </Button>
         <CredenzaClose asChild>

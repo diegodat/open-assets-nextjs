@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Credenza,
   CredenzaBody,
@@ -9,9 +9,8 @@ import {
   CredenzaHeader,
   CredenzaTitle,
   CredenzaTrigger,
-} from "@/components/auth/Credenza";
-import { useFormContext } from "react-hook-form";
-import { CredentialUserSignUp } from "./CredentialUserSignUpModal";
+} from '@/components/auth/Credenza';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -19,9 +18,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/packages/components/ui/form";
-import { Input } from "@/packages/components/ui/input";
-import { Button } from "@/packages/components/ui/button";
+} from '@/packages/components/ui/form';
+import { Input } from '@/packages/components/ui/input';
+import { Button } from '@/packages/components/ui/button';
+import { CredentialUserSignUp } from '@/schemas/auth/types';
 
 type Props = {
   onNext: () => void;
@@ -36,7 +36,7 @@ export const EmailVerify = (props: Props) => {
     trigger,
   } = useFormContext<CredentialUserSignUp>();
   const handleSubmit = async () => {
-    const isValid = await trigger("verificationCode");
+    const isValid = await trigger('verificationCode');
     if (!isValid) return;
     props.onNext();
   };
@@ -47,8 +47,7 @@ export const EmailVerify = (props: Props) => {
           メールアドレスを認証して下さい
         </CredenzaTitle>
         <CredenzaDescription className="text-left text-[#212121] text-[12px] leading-[21px]">
-          メールを送信しました。
-          〇〇〇〇〇〇〇〇@gmail.comメールに届いたリンクの認証コードを入力してOpen
+          メールを送信しました。 〇〇〇〇〇〇〇〇@gmail.comメールに届いたリンクの認証コードを入力してOpen
           Threadsをはじめましょう！
         </CredenzaDescription>
       </CredenzaHeader>
@@ -69,10 +68,7 @@ export const EmailVerify = (props: Props) => {
         />
       </CredenzaBody>
       <CredenzaFooter>
-        <Button
-          className="bg-[#1976D2] hover:bg-[#1976D2]"
-          onClick={handleSubmit}
-        >
+        <Button className="bg-[#1976D2] hover:bg-[#1976D2]" onClick={handleSubmit}>
           TOPへ戻る
         </Button>
         {/* <CredenzaClose asChild>

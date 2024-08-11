@@ -6,8 +6,8 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from "@/components/auth/Credenza";
-import { Button } from "@/packages/components/ui/button";
+} from '@/components/auth/Credenza';
+import { Button } from '@/packages/components/ui/button';
 import {
   FormControl,
   FormDescription,
@@ -15,11 +15,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/packages/components/ui/form";
-import { Input } from "@/packages/components/ui/input";
-import { FC } from "react";
-import { useFormContext } from "react-hook-form";
-import { GoogleUserSignUp } from "./GoogleUserSignUpModal";
+} from '@/packages/components/ui/form';
+import { Input } from '@/packages/components/ui/input';
+import { GoogleUserSignUp } from '@/schemas/auth/types';
+import { FC } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 type Props = {
   onSubmit: () => void;
@@ -60,10 +60,7 @@ export const UserIdForm: FC<Props> = (props) => {
         />
       </CredenzaBody>
       <CredenzaFooter>
-        <Button
-          className="bg-[#1976D2] hover:bg-[#1976D2]"
-          onClick={props.onSubmit}
-        >
+        <Button className="bg-[#1976D2] hover:bg-[#1976D2]" onClick={props.onSubmit}>
           次へ
         </Button>
         <CredenzaClose asChild>
